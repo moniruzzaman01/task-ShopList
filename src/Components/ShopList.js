@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ShopList = () => {
   const [shoplist, setShoplist] = useState([]);
+  console.log(shoplist);
 
   useEffect(() => {
     fetch("shoplist.json")
@@ -14,9 +15,17 @@ const ShopList = () => {
     const name = event.target.name.value;
     const area = event.target.area.value;
     const category = event.target.category.value;
-    const open = event.target.open.value;
-    const close = event.target.close.value;
-    console.log(name, area, category, open, close);
+    const openingDate = event.target.open.value;
+    const closindDate = event.target.close.value;
+    const newShop = {
+      name,
+      area,
+      category,
+      openingDate,
+      closindDate,
+    };
+    const newShopList = [...shoplist, newShop];
+    setShoplist(newShopList);
   };
 
   return (
@@ -33,6 +42,7 @@ const ShopList = () => {
                 <th>Category</th>
                 <th>Opening</th>
                 <th>Closing</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -42,8 +52,11 @@ const ShopList = () => {
                   <td>{shop.name}</td>
                   <td>{shop.area}</td>
                   <td>{shop.category}</td>
-                  <td>{shop.opening}</td>
-                  <td>{shop.closing}</td>
+                  <td>{shop.openingDate}</td>
+                  <td>{shop.closindDate}</td>
+                  <td>
+                    <button className=" btn btn-error btn-xs">Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
