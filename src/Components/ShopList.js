@@ -8,6 +8,16 @@ const ShopList = () => {
       .then((res) => res.json())
       .then((data) => setShoplist(data));
   }, []);
+  const handleForm = (event) => {
+    event.preventDefault();
+    console.log("hello");
+    const name = event.target.name.value;
+    const area = event.target.area.value;
+    const category = event.target.category.value;
+    const open = event.target.open.value;
+    const close = event.target.close.value;
+    console.log(name, area, category, open, close);
+  };
 
   return (
     <div className=" p-5">
@@ -44,63 +54,68 @@ const ShopList = () => {
       <div>
         <h2 className=" text-2xl text-white font-bold my-5">Add a shop</h2>
         <div className=" w-1/2 mx-auto">
-          <form action="">
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Shop Name</span>
+          <form action="" onSubmit={handleForm}>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Shop Name</span>
               </label>
-              <input type="text" class="input input-bordered w-full" required />
+              <input
+                type="text"
+                name="name"
+                className="input input-bordered w-full"
+                required
+              />
             </div>
             {/* area and category */}
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Area</span>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Area</span>
               </label>
-              <select name="area" class="select select-bordered" required>
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>Thane</option>
-                <option>Pune</option>
-                <option>Mumbai</option>
-                <option>Nashik</option>
-                <option>Nagpur</option>
+              <select name="area" className="select select-bordered" required>
+                <option value="Thane">Thane</option>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Nashik">Nashik</option>
+                <option value="Nagpur">Nagpur</option>
               </select>
             </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Category</span>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Category</span>
               </label>
-              <select class="select select-bordered" required>
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>Grocery</option>
-                <option>Butcher</option>
-                <option>Baker</option>
-                <option>Chemist</option>
-                <option>Stationary</option>
+              <select
+                name="category"
+                className="select select-bordered"
+                required
+              >
+                <option value="Grocery">Grocery</option>
+                <option value="Butcher">Butcher</option>
+                <option value="Baker">Baker</option>
+                <option value="Chemist">Chemist</option>
+                <option value="Stationary">Stationary</option>
               </select>
             </div>
             {/* date */}
             <div className=" flex gap-5 w-full">
-              <div class="form-control w-full">
-                <label class="label">
-                  <span class="label-text">Opening Date</span>
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Opening Date</span>
                 </label>
                 <input
                   type="date"
-                  class="input input-bordered w-full max-w-lg"
+                  name="open"
+                  className="input input-bordered w-full max-w-lg"
                   required
                 />
               </div>
-              <div class="form-control w-full">
-                <label class="label">
-                  <span class="label-text">Closing Date</span>
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Closing Date</span>
                 </label>
                 <input
                   type="date"
-                  class="input input-bordered w-full max-w-lg"
+                  name="close"
+                  className="input input-bordered w-full max-w-lg"
                   required
                 />
               </div>
