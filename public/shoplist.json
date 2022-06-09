@@ -1,5 +1,6 @@
 [
   {
+    "id": "1",
     "name": "Shop-A",
     "area": "Thane",
     "category": "Grocery",
@@ -7,6 +8,7 @@
     "closingDate": ""
   },
   {
+    "id": "2",
     "name": "Shop-B",
     "area": "Pune",
     "category": "Butcher",
@@ -14,6 +16,7 @@
     "closingDate": ""
   },
   {
+    "id": "3",
     "name": "Shop-C",
     "area": "Mumbai",
     "category": "Baker",
@@ -21,6 +24,7 @@
     "closingDate": ""
   },
   {
+    "id": "4",
     "name": "Shop-D",
     "area": "Nashik",
     "category": "Chemist",
@@ -28,6 +32,7 @@
     "closingDate": ""
   },
   {
+    "id": "5",
     "name": "Shop-E",
     "area": "Nagpur",
     "category": "Stationary",

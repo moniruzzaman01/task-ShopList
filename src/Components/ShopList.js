@@ -2,22 +2,26 @@ import React, { useEffect, useState } from "react";
 
 const ShopList = () => {
   const [shoplist, setShoplist] = useState([]);
-  console.log(shoplist);
 
   useEffect(() => {
     fetch("shoplist.json")
       .then((res) => res.json())
       .then((data) => setShoplist(data));
   }, []);
+
+  console.log(shoplist);
+
   const handleForm = (event) => {
     event.preventDefault();
-    console.log("hello");
+
+    const id = shoplist.length + 1 + "";
     const name = event.target.name.value;
     const area = event.target.area.value;
     const category = event.target.category.value;
     const openingDate = event.target.open.value;
     const closindDate = event.target.close.value;
     const newShop = {
+      id,
       name,
       area,
       category,
@@ -26,6 +30,13 @@ const ShopList = () => {
     };
     const newShopList = [...shoplist, newShop];
     setShoplist(newShopList);
+  };
+
+  const handleDelete = (id) => {
+    console.log("get", id);
+    const restShops = shoplist.filter((shop) => shop.id !== id);
+    const newList = [...restShops];
+    setShoplist(newList);
   };
 
   return (
@@ -55,7 +66,12 @@ const ShopList = () => {
                   <td>{shop.openingDate}</td>
                   <td>{shop.closindDate}</td>
                   <td>
-                    <button className=" btn btn-error btn-xs">Delete</button>
+                    <button
+                      onClick={() => handleDelete(shop.id)}
+                      className=" btn btn-error btn-xs"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
