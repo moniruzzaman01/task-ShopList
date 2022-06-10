@@ -1,71 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import useShopData from "../hooks/useShopData";
+import Modal from "./Modal";
 
 const ShopList = () => {
-  const data = [
-    {
-      id: "1",
-      name: "Shop-A",
-      area: "Thane",
-      category: "Grocery",
-      openingDate: "2022-06-13",
-      closingDate: "2022-12-13",
-    },
-    {
-      id: "2",
-      name: "Shop-B",
-      area: "Pune",
-      category: "Butcher",
-      openingDate: "2022-01-13",
-      closingDate: "2022-11-13",
-    },
-    {
-      id: "3",
-      name: "Shop-C",
-      area: "Mumbai",
-      category: "Baker",
-      openingDate: "2022-02-13",
-      closingDate: "2022-09-13",
-    },
-    {
-      id: "4",
-      name: "Shop-D",
-      area: "Nashik",
-      category: "Chemist",
-      openingDate: "2022-01-13",
-      closingDate: "2022-12-13",
-    },
-    {
-      id: "6",
-      name: "Shop-F",
-      area: "Nashik",
-      category: "Stationary",
-      openingDate: "2022-04-13",
-      closingDate: "2022-09-13",
-    },
-    {
-      id: "5",
-      name: "Shop-E",
-      area: "Nagpur",
-      category: "Stationary",
-      openingDate: "2022-02-13",
-      closingDate: "2022-08-13",
-    },
-  ];
-  const [shoplist, setShoplist] = useState(data);
+  const [shoplist, setShoplist] = useShopData();
   const [filteredShoplist, setFilteredShoplist] = useState([]);
   const [area, setArea] = useState("");
   const [category, setCategory] = useState("");
   const [ODate, setODate] = useState("");
   const [CDate, setCDate] = useState("");
-
-  // get data from json file
-  // useEffect(() => {
-  //   fetch("shoplist.json")
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
-  // console.log("main", shoplist);
+  const [modal, setModal] = useState(false);
+  const [editData, setEditData] = useState({});
 
   // filters
   useEffect(() => {
@@ -82,7 +28,6 @@ const ShopList = () => {
       setFilteredShoplist(shoplist);
     }
   }, [area, category, ODate, CDate, shoplist]);
-  // console.log("filtered", filteredShoplist);
 
   // add data using form
   const handleForm = (event) => {
@@ -109,6 +54,7 @@ const ShopList = () => {
     };
     const newShopList = [...shoplist, newShop];
     setShoplist(newShopList);
+    toast.success("New Shop Added.");
   };
 
   // delete data using btn click
@@ -118,8 +64,35 @@ const ShopList = () => {
     setShoplist(newList);
   };
 
+  // edit data
+  const handleModal = (data) => {
+    setEditData(data);
+    setModal(true);
+  };
+  const handleEdit = (data) => {
+    const a = [...shoplist];
+    a.forEach((x) => {
+      if (x.id === data.id) {
+        console.log("s", x);
+        x.name = data.name;
+        x.area = data.area;
+        x.category = data.category;
+        x.openingDate = data.openingDate;
+        x.closingDate = data.closingDate;
+      }
+    });
+  };
+
   return (
     <div className=" p-5">
+      {/* modal */}
+      {modal && (
+        <Modal
+          handleEdit={handleEdit}
+          setModal={setModal}
+          editData={editData}
+        />
+      )}
       {/* Shop list table */}
       <div className=" mb-5">
         <h2 className=" text-2xl text-white font-bold my-5">Shop List</h2>
@@ -207,10 +180,18 @@ const ShopList = () => {
                   <td>
                     <button
                       onClick={() => handleDelete(shop.id)}
-                      className=" btn btn-error btn-xs"
+                      className=" btn btn-error btn-xs mr-1"
                     >
                       Delete
                     </button>
+
+                    <label
+                      htmlFor="editModal"
+                      onClick={() => handleModal(shop)}
+                      className=" btn btn-success btn-xs"
+                    >
+                      Edit
+                    </label>
                   </td>
                 </tr>
               ))}
