@@ -1,16 +1,83 @@
 import React, { useEffect, useState } from "react";
 
 const ShopList = () => {
-  const [shoplist, setShoplist] = useState([]);
+  const data = [
+    {
+      id: "1",
+      name: "Shop-A",
+      area: "Thane",
+      category: "Grocery",
+      openingDate: "",
+      closingDate: "",
+    },
+    {
+      id: "2",
+      name: "Shop-B",
+      area: "Pune",
+      category: "Butcher",
+      openingDate: "",
+      closingDate: "",
+    },
+    {
+      id: "3",
+      name: "Shop-C",
+      area: "Mumbai",
+      category: "Baker",
+      openingDate: "",
+      closingDate: "",
+    },
+    {
+      id: "4",
+      name: "Shop-D",
+      area: "Nashik",
+      category: "Chemist",
+      openingDate: "",
+      closingDate: "",
+    },
+    {
+      id: "6",
+      name: "Shop-F",
+      area: "Nashik",
+      category: "Stationary",
+      openingDate: "",
+      closingDate: "",
+    },
+    {
+      id: "5",
+      name: "Shop-E",
+      area: "Nagpur",
+      category: "Stationary",
+      openingDate: "",
+      closingDate: "",
+    },
+  ];
+  const [shoplist, setShoplist] = useState(data);
+  const [filteredShoplist, setFilteredShoplist] = useState([]);
+  const [area, setArea] = useState("");
+  const [category, setCategory] = useState("");
 
+  // get data from json file
+  // useEffect(() => {
+  //   fetch("shoplist.json")
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // }, []);
+  // console.log("main", shoplist);
+
+  // filters
   useEffect(() => {
-    fetch("shoplist.json")
-      .then((res) => res.json())
-      .then((data) => setShoplist(data));
-  }, []);
+    if (area || category) {
+      const filteredShops = shoplist.filter(
+        (shop) => shop.area.includes(area) && shop.category.includes(category)
+      );
+      setFilteredShoplist(filteredShops);
+    } else {
+      setFilteredShoplist(shoplist);
+    }
+  }, [area, category, shoplist]);
+  // console.log("filtered", filteredShoplist);
 
-  console.log(shoplist);
-
+  // add data using form
   const handleForm = (event) => {
     event.preventDefault();
 
@@ -32,8 +99,8 @@ const ShopList = () => {
     setShoplist(newShopList);
   };
 
+  // delete data using btn click
   const handleDelete = (id) => {
-    console.log("get", id);
     const restShops = shoplist.filter((shop) => shop.id !== id);
     const newList = [...restShops];
     setShoplist(newList);
@@ -41,8 +108,46 @@ const ShopList = () => {
 
   return (
     <div className=" p-5">
+      {/* Shop list table */}
       <div className=" mb-5">
         <h2 className=" text-2xl text-white font-bold my-5">Shop List</h2>
+        {/* Filters */}
+        <div className=" grid grid-cols-4 gap-5 mb-5">
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Area</span>
+            </label>
+            <select
+              onChange={(event) => setArea(event.target.value)}
+              className="select select-bordered"
+              required
+            >
+              <option value="">Choose one</option>
+              <option value="Thane">Thane</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Nashik">Nashik</option>
+              <option value="Nagpur">Nagpur</option>
+            </select>
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Category</span>
+            </label>
+            <select
+              onChange={(event) => setCategory(event.target.value)}
+              className="select select-bordered"
+              required
+            >
+              <option value="">Choose one</option>
+              <option value="Grocery">Grocery</option>
+              <option value="Butcher">Butcher</option>
+              <option value="Baker">Baker</option>
+              <option value="Chemist">Chemist</option>
+              <option value="Stationary">Stationary</option>
+            </select>
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
             <thead>
@@ -57,7 +162,7 @@ const ShopList = () => {
               </tr>
             </thead>
             <tbody>
-              {shoplist.map((shop, index) => (
+              {filteredShoplist?.map((shop, index) => (
                 <tr key={index}>
                   <th>{index + 1}</th>
                   <td>{shop.name}</td>
@@ -80,6 +185,7 @@ const ShopList = () => {
         </div>
       </div>
       <hr />
+      {/* Add shop form */}
       <div>
         <h2 className=" text-2xl text-white font-bold my-5">Add a shop</h2>
         <div className=" w-1/2 mx-auto">

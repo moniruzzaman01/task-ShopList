@@ -15,7 +15,7 @@ const Shop = () => {
           onClick={() => navigate("/shop-list")}
           className=" btn btn-accent px-10 "
         >
-          Show List
+          Let's Dive In
         </button>
       </div>
     </div>
