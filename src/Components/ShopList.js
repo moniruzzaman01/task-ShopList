@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ShopList = () => {
   const data = [
@@ -57,7 +58,6 @@ const ShopList = () => {
   const [category, setCategory] = useState("");
   const [ODate, setODate] = useState("");
   const [CDate, setCDate] = useState("");
-  console.log(CDate);
 
   // get data from json file
   // useEffect(() => {
@@ -93,14 +93,19 @@ const ShopList = () => {
     const area = event.target.area.value;
     const category = event.target.category.value;
     const openingDate = event.target.open.value;
-    const closindDate = event.target.close.value;
+    const closingDate = event.target.close.value;
+
+    if (new Date(openingDate) > new Date(closingDate)) {
+      return toast.error("Closing date cannot be earlier than opening date!!!");
+    }
+
     const newShop = {
       id,
       name,
       area,
       category,
       openingDate,
-      closindDate,
+      closingDate,
     };
     const newShopList = [...shoplist, newShop];
     setShoplist(newShopList);
