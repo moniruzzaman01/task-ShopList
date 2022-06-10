@@ -97,7 +97,7 @@ const ShopList = () => {
       <div className=" mb-5">
         <h2 className=" text-2xl text-white font-bold my-5">Shop List</h2>
         {/* Filters */}
-        <div className=" grid grid-cols-4 gap-5 mb-5">
+        <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-5 mb-5">
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Area</span>
@@ -203,7 +203,7 @@ const ShopList = () => {
       {/* Add shop form */}
       <div>
         <h2 className=" text-2xl text-white font-bold my-5">Add a shop</h2>
-        <div className=" w-1/2 mx-auto">
+        <div className=" md:w-2/3 lg:w-1/2 mx-auto">
           <form action="" onSubmit={handleForm}>
             <div className="form-control w-full">
               <label className="label">
@@ -254,7 +254,7 @@ const ShopList = () => {
                 <input
                   type="date"
                   name="open"
-                  className="input input-bordered w-full max-w-lg"
+                  className="input input-bordered w-full "
                   required
                 />
               </div>
@@ -265,7 +265,7 @@ const ShopList = () => {
                 <input
                   type="date"
                   name="close"
-                  className="input input-bordered w-full max-w-lg"
+                  className="input input-bordered w-full"
                   required
                 />
               </div>
