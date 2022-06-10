@@ -7,54 +7,57 @@ const ShopList = () => {
       name: "Shop-A",
       area: "Thane",
       category: "Grocery",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-06-13",
+      closingDate: "2022-12-13",
     },
     {
       id: "2",
       name: "Shop-B",
       area: "Pune",
       category: "Butcher",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-01-13",
+      closingDate: "2022-11-13",
     },
     {
       id: "3",
       name: "Shop-C",
       area: "Mumbai",
       category: "Baker",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-02-13",
+      closingDate: "2022-09-13",
     },
     {
       id: "4",
       name: "Shop-D",
       area: "Nashik",
       category: "Chemist",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-01-13",
+      closingDate: "2022-12-13",
     },
     {
       id: "6",
       name: "Shop-F",
       area: "Nashik",
       category: "Stationary",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-04-13",
+      closingDate: "2022-09-13",
     },
     {
       id: "5",
       name: "Shop-E",
       area: "Nagpur",
       category: "Stationary",
-      openingDate: "",
-      closingDate: "",
+      openingDate: "2022-02-13",
+      closingDate: "2022-08-13",
     },
   ];
   const [shoplist, setShoplist] = useState(data);
   const [filteredShoplist, setFilteredShoplist] = useState([]);
   const [area, setArea] = useState("");
   const [category, setCategory] = useState("");
+  const [ODate, setODate] = useState("");
+  const [CDate, setCDate] = useState("");
+  console.log(CDate);
 
   // get data from json file
   // useEffect(() => {
@@ -66,15 +69,19 @@ const ShopList = () => {
 
   // filters
   useEffect(() => {
-    if (area || category) {
+    if (area || category || ODate || CDate) {
       const filteredShops = shoplist.filter(
-        (shop) => shop.area.includes(area) && shop.category.includes(category)
+        (shop) =>
+          shop.area.includes(area) &&
+          shop.category.includes(category) &&
+          shop.openingDate.includes(ODate) &&
+          shop.closingDate.includes(CDate)
       );
       setFilteredShoplist(filteredShops);
     } else {
       setFilteredShoplist(shoplist);
     }
-  }, [area, category, shoplist]);
+  }, [area, category, ODate, CDate, shoplist]);
   // console.log("filtered", filteredShoplist);
 
   // add data using form
@@ -147,6 +154,28 @@ const ShopList = () => {
               <option value="Stationary">Stationary</option>
             </select>
           </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Opening Date</span>
+            </label>
+            <input
+              onChange={(event) => setODate(event.target.value)}
+              type="date"
+              className="input input-bordered w-full max-w-lg"
+              required
+            />
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Opening Date</span>
+            </label>
+            <input
+              onChange={(event) => setCDate(event.target.value)}
+              type="text"
+              className="input input-bordered w-full max-w-lg"
+              required
+            />
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
@@ -169,7 +198,7 @@ const ShopList = () => {
                   <td>{shop.area}</td>
                   <td>{shop.category}</td>
                   <td>{shop.openingDate}</td>
-                  <td>{shop.closindDate}</td>
+                  <td>{shop.closingDate}</td>
                   <td>
                     <button
                       onClick={() => handleDelete(shop.id)}
